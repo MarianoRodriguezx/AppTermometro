@@ -1,17 +1,21 @@
 package com.mariano.fitapp
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 
 class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
         appSingleton = this
-        //database =  Room.databaseBuilder(this, RegistersDatabase::class.java, "registers-db").build()
+    }
+
+    fun getSharedPreferences(): SharedPreferences {
+        return getSharedPreferences("bucket", Context.MODE_PRIVATE)
     }
 
     companion object {
-        //lateinit var database: RegistersDatabase
 
         lateinit var appSingleton: App
 

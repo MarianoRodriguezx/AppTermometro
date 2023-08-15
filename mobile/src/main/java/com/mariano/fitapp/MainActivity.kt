@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, D
         setContentView(binding.root)
 
         //registers = ArrayList()
-        getRegisters()
 
         googleApiClient = GoogleApiClient.Builder(this)
             .addConnectionCallbacks(this)
@@ -44,6 +43,8 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, D
             .build()
 
         googleApiClient.connect()
+
+        binding.temperature.text = getTemp()
 
     }
 
@@ -59,7 +60,6 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, D
 
     override fun onDataChanged(p0: DataEventBuffer) {
         // Se llama cuando los datos han cambiado en el reloj Wear OS
-        Toast.makeText(this, "Cambiooo", Toast.LENGTH_LONG).show()
         for (event in p0) {
             if (event.type == DataEvent.TYPE_CHANGED) {
                 val path = event.dataItem.uri.path
@@ -68,12 +68,27 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, D
                     val dataMapItem = DataMapItem.fromDataItem(event.dataItem)
                     val dataValue = dataMapItem.dataMap.getString("data_sensor")
                     binding.temperature.text = dataValue
+                    getRegisters(dataValue)
                 }
             }
         }
     }
 
-    fun getRegisters(){
-        //registers = App.database.registerDao().getAllRegisters()
+    fun getRegisters(temp: String?) {
+        var settings = App.getInstance().getSharedPreferences()
+        var editor = settings.edit()
+        if (temp != null) {
+            editor.putString("temperatura", temp)
+            editor.apply()
+        }
+    }
+
+    fun getTemp(): String {
+        var settings = App.getInstance().getSharedPreferences()
+        val myTemp = settings.getString("temperatura", null)
+        if (myTemp != null) {
+            return myTemp;
+        }
+        return "0"
     }
 }
