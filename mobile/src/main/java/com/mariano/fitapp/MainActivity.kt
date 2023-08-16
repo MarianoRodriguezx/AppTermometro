@@ -66,6 +66,12 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, D
                     val dataMapItem = DataMapItem.fromDataItem(event.dataItem)
                     val dataValue = dataMapItem.dataMap.getString("data_sensor")
                     binding.temperature.text = dataValue
+                    val valueFloat = dataValue.split('°')[0].toFloat()
+                    if(valueFloat > 36.5){
+                        binding.imageView.setImageResource(R.drawable.circle_red_red)
+                    } else {
+                        binding.imageView.setImageResource(R.drawable.circle_red)
+                    }
                     //binding.imageView.se
                     getRegisters(dataValue)
                 }
