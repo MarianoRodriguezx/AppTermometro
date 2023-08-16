@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, D
                     val dataMapItem = DataMapItem.fromDataItem(event.dataItem)
                     val dataValue = dataMapItem.dataMap.getString("data_sensor")
                     binding.temperature.text = dataValue
+                    //binding.imageView.se
                     getRegisters(dataValue)
                 }
             }
