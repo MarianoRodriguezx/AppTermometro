@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, D
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //registers = ArrayList()
-
         googleApiClient = GoogleApiClient.Builder(this)
             .addConnectionCallbacks(this)
             .addApi(Wearable.API)
@@ -89,6 +87,6 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, D
         if (myTemp != null) {
             return myTemp;
         }
-        return "0"
+        return "0°"
     }
 }
